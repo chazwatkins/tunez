@@ -33,6 +33,10 @@ defmodule Tunez.MixProject do
   # Type `mix help deps` for examples and options.
   defp deps do
     [
+      {:ash_phoenix, "~> 2.0"},
+      {:ash_postgres, "~> 2.0"},
+      {:sourceror, "~> 1.7"},
+      {:ash, "~> 3.0"},
       {:igniter, "~> 0.3"},
       {:phoenix, "~> 1.7.14"},
       {:phoenix_ecto, "~> 4.5"},
@@ -46,12 +50,7 @@ defmodule Tunez.MixProject do
       {:esbuild, "~> 0.8", runtime: Mix.env() == :dev},
       {:tailwind, "~> 0.2", runtime: Mix.env() == :dev},
       {:heroicons,
-       github: "tailwindlabs/heroicons",
-       tag: "v2.1.1",
-       sparse: "optimized",
-       app: false,
-       compile: false,
-       depth: 1},
+       github: "tailwindlabs/heroicons", tag: "v2.1.1", sparse: "optimized", app: false, compile: false, depth: 1},
       {:swoosh, "~> 1.5"},
       {:finch, "~> 0.13"},
       {:telemetry_metrics, "~> 1.0"},
@@ -60,7 +59,8 @@ defmodule Tunez.MixProject do
       {:jason, "~> 1.2"},
       {:dns_cluster, "~> 0.1.1"},
       {:bandit, "~> 1.5"},
-      {:phoenix_test, "~> 0.5.1", only: :test, runtime: false}
+      {:phoenix_test, "~> 0.5.1", only: :test, runtime: false},
+      {:styler, "~> 1.3", only: [:dev, :test], runtime: false}
     ]
   end
 
@@ -72,7 +72,7 @@ defmodule Tunez.MixProject do
   # See the documentation for `Mix` for more info on aliases.
   defp aliases do
     [
-      setup: ["deps.get", "ecto.setup", "assets.setup", "assets.build"],
+      setup: ["deps.get", "ash.setup", "assets.setup", "assets.build", "run priv/repo/seeds.exs"],
       "ecto.setup": ["ecto.create", "ecto.migrate"],
       seed: [
         "run priv/repo/seeds/01-artists.exs",
@@ -80,7 +80,7 @@ defmodule Tunez.MixProject do
         "run priv/repo/seeds/08-tracks.exs"
       ],
       "ecto.reset": ["ecto.drop", "ecto.setup"],
-      test: ["ecto.create --quiet", "ecto.migrate --quiet", "test"],
+      test: ["ash.setup --quiet", "test"],
       "assets.setup": ["tailwind.install --if-missing", "esbuild.install --if-missing"],
       "assets.build": ["tailwind tunez", "esbuild tunez"],
       "assets.deploy": [

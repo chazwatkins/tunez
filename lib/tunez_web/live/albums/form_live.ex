@@ -1,4 +1,5 @@
 defmodule TunezWeb.Albums.FormLive do
+  @moduledoc false
   use TunezWeb, :live_view
 
   def mount(_params, _session, socket) do

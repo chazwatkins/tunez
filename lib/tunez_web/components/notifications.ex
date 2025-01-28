@@ -1,4 +1,5 @@
 defmodule TunezWeb.Notifications do
+  @moduledoc false
   use TunezWeb, :live_component
 
   def render(assigns) do

@@ -1,4 +1,5 @@
 defmodule Tunez.Support.Helpers do
+  @moduledoc false
   require Ash.Query
 
   @doc """
@@ -9,8 +10,7 @@ defmodule Tunez.Support.Helpers do
       iex> Tunez.Support.Helpers.time_ago(5, :second)
   """
   def ago(seconds, unit) when is_integer(seconds) do
-    DateTime.utc_now()
-    |> DateTime.add(-seconds, unit)
+    DateTime.add(DateTime.utc_now(), -seconds, unit)
   end
 
   @doc """

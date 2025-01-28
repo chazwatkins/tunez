@@ -19,18 +19,18 @@ defmodule TunezWeb.ConnCase do
 
   using do
     quote do
+      use TunezWeb, :verified_routes
+
+      import Phoenix.ConnTest, except: [get: 3, delete: 3]
+      import PhoenixTest
+      import Plug.Conn
+      import Tunez.Generator
+      import Tunez.Support.Helpers
+      import TunezWeb.ConnCase
       # The default endpoint for testing
       @endpoint TunezWeb.Endpoint
 
-      use TunezWeb, :verified_routes
-
       # Import conveniences for testing with connections
-      import Plug.Conn
-      import Phoenix.ConnTest, except: [get: 3, delete: 3]
-      import TunezWeb.ConnCase
-      import Tunez.Support.Helpers
-      import Tunez.Generator
-      import PhoenixTest
     end
   end
 
